@@ -649,7 +649,8 @@ public class SocialLabelCustomAuth extends TigaseCustomAuth {
 		boolean result = false;
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();		
 		try {
-			String userId = user.substring(0, user.indexOf("@"));
+			int index = user.indexOf("@");
+			String userId = index != -1 ? user.substring(0, user.indexOf("@")) : user;
 			map.add("userId", userId);
 			map.add("password", password);			
 			ResponseEntity<Map> data = DataUtil.postJson(web_config_url + "internalLogin", map, Map.class);
