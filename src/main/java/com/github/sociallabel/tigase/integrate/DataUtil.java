@@ -21,8 +21,18 @@ public class DataUtil {
 	    formTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 		formTemplate.getMessageConverters().add(new StringHttpMessageConverter());
 	}
+	
+	private final static RestTemplate jsonTemplate = new RestTemplate();
+	static {
+		jsonTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+		jsonTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+	}
 
 	public static <T> ResponseEntity<T> postJson(String url, Object data, Class<T> type,  Object... uriVariables){					
+		return jsonTemplate.postForEntity(url, data, type, uriVariables);
+	}
+	
+	public static <T> ResponseEntity<T> postForm(String url, Object data, Class<T> type,  Object... uriVariables){					
 		return formTemplate.postForEntity(url, data, type, uriVariables);
 	}
 
